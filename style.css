@@ -3,7 +3,7 @@ body{
     font-family: system-ui;
 }
 header{
-    background-image: url(./images/Banner.jpg);
+    background-image: url(images/iconos/Banner.jpg);
     padding-top: 18px;
     padding-bottom: 18px;
     position: fixed;

@@ -1,24 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es-AR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" type="image/svg+xml" href="./images/PagLogo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrito de Compras</title>
-    <link rel="stylesheet" href="./style.css">
-    
+    <title>Tiendita</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="header-section container">
-            <img class="logo" src="./images/Logo.png" alt="">
+            <img class="logo" src="images/iconos/tienda.png" alt="">
             <div>
-                <img onclick="showCart(this)" class="cart" src="./images/ShopCart.png" alt="">
+                <img onclick="abrirCarrito()" class="cart" src="images/iconos/carrito.png" alt="">
                 <p class="count-product">0</p>
             </div>
             <div class="cart-products" id="products-id">
-                <p class="close-btn" onclick="closeBtn()">X</p>
                 <h3>Mi carrito</h3>
                 <div class="card-items">
                 </div>
@@ -30,7 +26,7 @@
         <div class="products">
             <div class="carts">
                 <div>
-                    <img src="./images/products/Teclado Genius Kb 102 Smart Usb Black.png" alt="">
+                    <img src="./img/productos/generico.png" alt="">
                     <p><span>16000</span>$</p>
                 </div>
                 <p class="title">Teclado Genius Kb-102 Smart Usb Black</p>
@@ -38,7 +34,7 @@
             </div>
             <div class="carts">
                 <div>
-                    <img src="./images/products/Kit de teclado y mouse Logitech MK120 Español Latinoamérica de color negro.png" alt="">
+                    <img src="img/productos/Kit de teclado y mouse Logitech MK120 Español Latinoamérica de color negro.png" alt="">
                     <p><span>20000</span>$</p>
                 </div>
                 <p class="title"> Kit de teclado y mouse Logitech MK120 Español Latinoamérica de color negro</p>
@@ -46,7 +42,7 @@
             </div>
             <div class="carts">
                 <div>
-                    <img src="./images/products/Teclado gamer Redragon Yama QWERTY Outemu Purple español latinoamérica color negro con luz RGB.png" alt="">
+                    <img src="img/productos/Teclado gamer Redragon Yama QWERTY Outemu Purple español latinoamérica color negro con luz RGB.png" alt="">
                     <p><span>75000</span>$</p>
                 </div>
                 <p class="title"> Teclado gamer Redragon Yama QWERTY Outemu Purple español latinoamérica color negro con luz RGB</p>
@@ -54,7 +50,7 @@
             </div>
             <div class="carts">
                 <div>
-                    <img src="./images/products/Teclado-Gamer-Redragon-K686ak-Eisa-Rgb-Pro-Negro-Y-Blanco-Anime (1).png" alt="">
+                    <img src="img/productos/Teclado-Gamer-Redragon-K686ak-Eisa-Rgb-Pro-Negro-Y-Blanco-Anime (1).png" alt="">
                     <p><span>95000</span>$</p>  
                 </div>
                 <p class="title">Teclado Gamer Redragon K686ak Eisa Rgb Pro Negro Y Blanco Anime</p>
@@ -62,7 +58,7 @@
             </div>
             <div class="carts">
                 <div>
-                    <img src="./images/products/Teclado-Mecánico-Redragon-Dragonborn-Luz-Led-Switch-Brown (1).png" alt="">
+                    <img src="img/productos/Teclado-Mecánico-Redragon-Dragonborn-Luz-Led-Switch-Brown (1).png" alt="">
                     <p><span>45000</span>$</p>
                 </div>
                 <p class="title"> Teclado Mecánico Redragon Dragonborn Luz Led Switch Brown</p>
@@ -70,7 +66,7 @@
             </div>
             <div class="carts">
                 <div>
-                    <img src="./images/products/Gabinete Kit Cromax 2801 Teclado Mouse Fuente 600w Color Negro.webp" alt="">
+                    <img src="img/productos/Gabinete Kit Cromax 2801 Teclado Mouse Fuente 600w Color Negro.webp" alt="">
                     <p><span>53000</span>$</p>
                 </div>
                 <p class="title"> Gabinete Kit Cromax 2801 Teclado Mouse Fuente 600w Color Negro</p>
@@ -78,7 +74,7 @@
             </div>
             <div class="carts">
                 <div>
-                    <img src="./images/products/Teclado-de-una-mano-gamer-Redragon-Diti-K585RGB-color-negro-con-luz-RGB (1).png" alt="">
+                    <img src="img/productos/Teclado-de-una-mano-gamer-Redragon-Diti-K585RGB-color-negro-con-luz-RGB (1).png" alt="">
                     <p><span>47500</span>$</p>
                 </div>
                 <p class="title"> Teclado de una mano gamer Redragon Diti K585RGB color negro con luz RGB</p>
@@ -86,14 +82,6 @@
             </div>
         </div>
     </section>
-    <script>
-        function showCart(x){
-            document.getElementById("products-id").style.display = "list-item";
-        }
-        function closeBtn(){
-             document.getElementById("products-id").style.display = "none";
-        }
-    </script>
-    <script src="./custom.js" ></script>
+    <script src="script.js" ></script>
 </body>
 </html>

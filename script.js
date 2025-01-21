@@ -124,3 +124,16 @@ function loadCartFromLocalStorage() {
         loadHtml();
     }
 }
+
+// Funciones display
+function abrirCarrito(){
+    if ((document.getElementById("products-id").style.display) == "block" ){
+        document.getElementById("products-id").style.display = "none";
+    }
+    else{
+        document.getElementById("products-id").style.display = "block";
+    }
+}
+function bienvenido(){
+    alert("Bienvenido! Tenemos Ofertas en Fernet para el este caluroso Finde!")
+}
