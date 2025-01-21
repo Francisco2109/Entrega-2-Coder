@@ -1,7 +1,7 @@
-let containerProductos = document.querySelector(".products");
-let containerCompras = document.querySelector(".card-items");
-let precioTotal = document.querySelector(".price-total");
-let amountProduct = document.querySelector(".count-product");
+let containerProductos = document.querySelector(".productos");
+let containerCompras = document.querySelector(".carrito-items");
+let precioTotal = document.querySelector(".precio-total");
+let cantProducto = document.querySelector(".cuenta-producto");
 let botonComprarCarrito = document.querySelector(".btn-comprar-carrito")
 let compras = [];
 let precioAcumulado = 0;
@@ -25,22 +25,22 @@ function aggProducto(e) {
 
 function removerProducto(e) {
     if (e.target.classList.contains("btn-borrar")) {
-        const deleteId = e.target.getAttribute("producto-id");
+        const borrarId = e.target.getAttribute("producto-id");
 
         compras.forEach(producto => {
-            if (producto.id == deleteId) {
-                let priceReduce = parseFloat(producto.price) * parseFloat(producto.cant);
-                precioAcumulado =  precioAcumulado - priceReduce;
+            if (producto.id == borrarId) {
+                let precioReducir = parseFloat(producto.precio) * parseFloat(producto.cant);
+                precioAcumulado =  precioAcumulado - precioReducir;
                 precioAcumulado = precioAcumulado.toFixed(2);
                 contadorProductos = contadorProductos - parseFloat(producto.cant);
             }
         });
-        compras = compras.filter(producto => producto.id !== deleteId);
+        compras = compras.filter(producto => producto.id !== borrarId);
     }
 
     if (compras.length === 0) {
         precioTotal.innerHTML = 0;
-        amountProduct.innerHTML = 0;
+        cantProducto.innerHTML = 0;
     }
 
     cargarHtmlCarrito();
@@ -49,14 +49,14 @@ function removerProducto(e) {
 
 function leerDatosHtml(producto) {
     const infoProducto = {
-        image: producto.querySelector("div img").src,
+        img: producto.querySelector(".producto-img").src,
         title: producto.querySelector(".title").textContent,
-        price: producto.querySelector(".producto-precio").textContent,
+        precio: producto.querySelector(".producto-precio").textContent,
         id: producto.querySelector("a").getAttribute("producto-id"),
         cant: 1 
     }
 
-    precioAcumulado = parseFloat(precioAcumulado) + parseFloat(infoProducto.price);
+    precioAcumulado = parseFloat(precioAcumulado) + parseFloat(infoProducto.precio);
     precioAcumulado = precioAcumulado.toFixed(2);
 
     const existe = compras.some(producto => producto.id === infoProducto.id);
@@ -83,16 +83,16 @@ function leerDatosHtml(producto) {
 
 function cargarHtmlCarrito() {
     limpiarHtmlCarrito();
-    compras.forEach(product => {
-        const { image, title, price, cant, id } = product;
-        const row = document.createElement("div");
+    compras.forEach(producto => {
+        const { img, title, precio, cant, id } = producto;
+        let row = document.createElement("div");
         row.classList.add("item");
         row.innerHTML = `
-            <img src="${image}">
+            <img src="${img}">
             <div class="item-content">
                 <h5>${title}</h5>
-                <h5 class="cart-price">${price}$</h5>
-                <h6>Amount: ${cant}</h6>
+                <h5 class="carrito-precio">$${precio}</h5>
+                <h6>Cantidad: ${cant}</h6>
             </div>
             <span class="btn-borrar" producto-id="${id}">X</span>
         `;
@@ -100,10 +100,10 @@ function cargarHtmlCarrito() {
     });
     if (compras.length === 0) {
         precioTotal.innerHTML = 0;
-        amountProduct.innerHTML = 0;
+        cantProducto.innerHTML = 0;
     } else{
         precioTotal.innerHTML = precioAcumulado;
-        amountProduct.innerHTML = contadorProductos;
+        cantProducto.innerHTML = contadorProductos;
     }
 }
 function confirmarCompra(){
@@ -112,7 +112,7 @@ function confirmarCompra(){
     precioAcumulado = 0;
     contadorProductos = 0;
     precioTotal.innerHTML = 0;
-    amountProduct.innerHTML = 0;
+    cantProducto.innerHTML = 0;
     limpiarHtmlCarrito()
     guardarLocalStorage();
 }
@@ -121,17 +121,18 @@ function limpiarHtmlCarrito() {
     containerCompras.innerHTML = "";
 }
 
+// Funciones de Almacenamiento
 function guardarLocalStorage() {
     const datos = {
         compras: compras,
         precioAcumulado: precioAcumulado,
         contadorProductos: contadorProductos
     };
-    localStorage.setItem("cart", JSON.stringify(datos));
+    localStorage.setItem("carrito", JSON.stringify(datos));
 }
 
 function cargarLocalStorage() {
-    const datos = JSON.parse(localStorage.getItem("cart"));
+    const datos = JSON.parse(localStorage.getItem("carrito"));
     if (datos) {
         compras = datos.compras;
         precioAcumulado = parseFloat(datos.precioAcumulado);
