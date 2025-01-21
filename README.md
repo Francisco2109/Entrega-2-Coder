@@ -1,2 +1,3 @@
-# Entrega 2 Coder
+# Entrega 2 JS
  
+## Autor: Francisco Giardelli
