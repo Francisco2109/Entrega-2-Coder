@@ -1,54 +1,53 @@
-let allContainerCart = document.querySelector('.products');
-let containerBuyCart = document.querySelector('.card-items');
+let containerProductos = document.querySelector('.products');
+let containerCompras = document.querySelector('.card-items');
 let priceTotal = document.querySelector('.price-total');
 let amountProduct = document.querySelector('.count-product');
 
-let buyThings = [];
-let totalCard = 0;
-let countProduct = 0;
+let compras = [];
+let precioAcumulado = 0;
+let contadorProductos = 0;
 
-loadEventListenrs();
-loadCartFromLocalStorage();
+eventos();
+cargarLocalStorage();
 
-function loadEventListenrs(){
-    allContainerCart.addEventListener('click', addProduct);
-    containerBuyCart.addEventListener('click', deleteProduct);
+function eventos(){
+    containerProductos.addEventListener('click', aggProducto);
+    containerCompras.addEventListener('click', removerProducto);
 }
 
-function addProduct(e) {
-    e.preventDefault();
-    if (e.target.classList.contains('btn-add-cart')) {
+function aggProducto(e) {
+    if (e.target.classList.contains('btn-comprar')) {
         const selectProduct = e.target.parentElement; 
-        readTheContent(selectProduct);
+        leerDatosHtml(selectProduct);
     }
 }
 
-function deleteProduct(e) {
-    if (e.target.classList.contains('delete-product')) {
+function removerProducto(e) {
+    if (e.target.classList.contains('borrar-producto')) {
         const deleteId = e.target.getAttribute('data-id');
 
-        buyThings.forEach(value => {
+        compras.forEach(value => {
             if (value.id == deleteId) {
                 let priceReduce = parseFloat(value.price) * parseFloat(value.amount);
-                totalCard =  totalCard - priceReduce;
-                totalCard = totalCard.toFixed(2);
+                precioAcumulado =  precioAcumulado - priceReduce;
+                precioAcumulado = precioAcumulado.toFixed(2);
             }
         });
 
-        buyThings = buyThings.filter(product => product.id !== deleteId);
-        countProduct--;
+        compras = compras.filter(product => product.id !== deleteId);
+        contadorProductos--;
     }
 
-    if (buyThings.length === 0) {
+    if (compras.length === 0) {
         priceTotal.innerHTML = 0;
         amountProduct.innerHTML = 0;
     }
 
-    loadHtml();
-    saveCartToLocalStorage();
+    cargarHtmlCarrito();
+    guardarLocalStorage();
 }
 
-function readTheContent(product) {
+function leerDatosHtml(product) {
     const infoProduct = {
         image: product.querySelector('div img').src,
         title: product.querySelector('.title').textContent,
@@ -57,12 +56,12 @@ function readTheContent(product) {
         amount: 1
     }
 
-    totalCard = parseFloat(totalCard) + parseFloat(infoProduct.price);
-    totalCard = totalCard.toFixed(2);
+    precioAcumulado = parseFloat(precioAcumulado) + parseFloat(infoProduct.price);
+    precioAcumulado = precioAcumulado.toFixed(2);
 
-    const exist = buyThings.some(product => product.id === infoProduct.id);
+    const exist = compras.some(product => product.id === infoProduct.id);
     if (exist) {
-        const pro = buyThings.map(product => {
+        const pro = compras.map(product => {
             if (product.id === infoProduct.id) {
                 product.amount++;
                 return product;
@@ -70,19 +69,19 @@ function readTheContent(product) {
                 return product;
             }
         });
-        buyThings = [...pro];
+        compras = [...pro];
     } else {
-        buyThings = [...buyThings, infoProduct];
-        countProduct++;
+        compras = [...compras, infoProduct];
+        contadorProductos++;
     }
 
-    loadHtml();
-    saveCartToLocalStorage();
+    cargarHtmlCarrito();
+    guardarLocalStorage();
 }
 
-function loadHtml() {
-    clearHtml();
-    buyThings.forEach(product => {
+function cargarHtmlCarrito() {
+    limpiarHtmlCarrito();
+    compras.forEach(product => {
         const { image, title, price, amount, id } = product;
         const row = document.createElement('div');
         row.classList.add('item');
@@ -93,35 +92,35 @@ function loadHtml() {
                 <h5 class="cart-price">${price}$</h5>
                 <h6>Amount: ${amount}</h6>
             </div>
-            <span class="delete-product" data-id="${id}">X</span>
+            <span class="borrar-producto" data-id="${id}">X</span>
         `;
-        containerBuyCart.appendChild(row);
+        containerCompras.appendChild(row);
     });
 
-    priceTotal.innerHTML = totalCard;
-    amountProduct.innerHTML = countProduct;
+    priceTotal.innerHTML = precioAcumulado;
+    amountProduct.innerHTML = contadorProductos;
 }
 
-function clearHtml() {
-    containerBuyCart.innerHTML = '';
+function limpiarHtmlCarrito() {
+    containerCompras.innerHTML = '';
 }
 
-function saveCartToLocalStorage() {
+function guardarLocalStorage() {
     const cartData = {
-        buyThings: buyThings,
-        totalCard: totalCard,
-        countProduct: countProduct
+        compras: compras,
+        precioAcumulado: precioAcumulado,
+        contadorProductos: contadorProductos
     };
     localStorage.setItem('cart', JSON.stringify(cartData));
 }
 
-function loadCartFromLocalStorage() {
+function cargarLocalStorage() {
     const cartData = JSON.parse(localStorage.getItem('cart'));
     if (cartData) {
-        buyThings = cartData.buyThings;
-        totalCard = parseFloat(cartData.totalCard);
-        countProduct = cartData.countProduct;
-        loadHtml();
+        compras = cartData.compras;
+        precioAcumulado = parseFloat(cartData.precioAcumulado);
+        contadorProductos = cartData.contadorProductos;
+        cargarHtmlCarrito();
     }
 }
 
