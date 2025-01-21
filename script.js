@@ -106,20 +106,20 @@ function limpiarHtmlCarrito() {
 }
 
 function guardarLocalStorage() {
-    const cartData = {
+    const datos = {
         compras: compras,
         precioAcumulado: precioAcumulado,
         contadorProductos: contadorProductos
     };
-    localStorage.setItem('cart', JSON.stringify(cartData));
+    localStorage.setItem('cart', JSON.stringify(datos));
 }
 
 function cargarLocalStorage() {
-    const cartData = JSON.parse(localStorage.getItem('cart'));
-    if (cartData) {
-        compras = cartData.compras;
-        precioAcumulado = parseFloat(cartData.precioAcumulado);
-        contadorProductos = cartData.contadorProductos;
+    const datos = JSON.parse(localStorage.getItem('cart'));
+    if (datos) {
+        compras = datos.compras;
+        precioAcumulado = parseFloat(datos.precioAcumulado);
+        contadorProductos = datos.contadorProductos;
         cargarHtmlCarrito();
     }
 }
