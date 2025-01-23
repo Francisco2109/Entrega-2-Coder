@@ -47,7 +47,6 @@ cargarProductos()
 
 
 // Eventos y Manejo Carrito 
-cargarLocalStorage();
 
 function eventos(){
     containerProductos.addEventListener("click", aggProducto);
@@ -193,4 +192,5 @@ function bienvenido(){
     alert("Bienvenido! Tenemos Ofertas en Fernet para el este caluroso Finde!")
 }
 
+cargarLocalStorage();
 eventos();
