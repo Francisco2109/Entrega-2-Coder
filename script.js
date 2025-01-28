@@ -33,7 +33,7 @@ function cargarProductos() {
                         </div>
                         <h5 class="producto-title">${producto.title}</h5>
                         <p>$<span class="producto-precio">${producto.precio}</span></p>
-                        <a href="" producto-id="${producto.id}" class="btn-comprar">Agregar al Carrito</a>
+                        <button producto-id="${producto.id}" class="btn-comprar">Agregar al Carrito</button>
                     </div>
                 `;
 
@@ -90,7 +90,7 @@ function leerDatosHtml(productoSeleccionado) {
         img: productoSeleccionado.querySelector(".producto-img").src,
         title: productoSeleccionado.querySelector(".producto-title").textContent,
         precio: productoSeleccionado.querySelector(".producto-precio").textContent,
-        id: productoSeleccionado.querySelector("a").getAttribute("producto-id"),
+        id: productoSeleccionado.querySelector("button").getAttribute("producto-id"),
         cant: 1 
     }
 

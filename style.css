@@ -59,7 +59,7 @@ header{
     min-width: 290px;
     z-index: 9999;
 }
-.productos-carrito a{
+.productos-carrito button{
     font-family: system-ui;
     text-decoration: none;
     background: greenyellow;
@@ -110,7 +110,7 @@ header{
     position: relative;
     background-color: white;
 }
-.cards a{
+.cards button{
     font-family: system-ui;
     text-decoration: none;
     background: red;
