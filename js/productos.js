@@ -110,54 +110,65 @@ function removerProducto(e) {
     guardarLocalStorage();
 }
 
+function stringToProducto(string){
+    const Producto = {
+        id: string.id,
+        img: string.img,
+        title: string.title,
+        precio: string.precio,
+        cantidadCarrito: string.cantidadCarrito,
+        stock: string.stock
+    }
+    return Producto
+}
+
 function leerDatosHtml(productoSeleccionado) {
-    const infoProducto = {
-        img: productoSeleccionado.querySelector(".producto-img").src,
-        title: productoSeleccionado.querySelector(".producto-title").textContent,
-        precio: productoSeleccionado.querySelector(".producto-precio").textContent,
-        id: productoSeleccionado.querySelector("button").getAttribute("producto-id"),
-        cant: 1 
-    }
-
-    precioAcumulado = parseFloat(precioAcumulado) + parseFloat(infoProducto.precio);
-    precioAcumulado = precioAcumulado.toFixed(2);
-
-    const existe = compras.some(producto => producto.id === infoProducto.id);
-    if (existe) {
-        contadorProductos++;
-        const pro = compras.map(producto => {
-                if (producto.id === infoProducto.id) {
-                    producto.cant++;
-                    return producto;
-                } else {
-                    return producto;
+    buscaId = productoSeleccionado.querySelector("button").getAttribute("producto-id")
+    fetch('productos.json')
+        .then((respuesta) => respuesta.json())
+        .then((datos) => {
+            const data = datos;
+            data.forEach(producto => {
+                if (producto.id == buscaId) {
+                productoSeleccionado = stringToProducto(producto);
                 }
+            });
+            existeEnCarro = compras.some(productoEnCarro => productoEnCarro.id == buscaId);
+            if (existeEnCarro) {
+                compras = compras.map(compra => {
+                    if (compra.id == buscaId) {
+                        compra.cantidadCarrito++;
+                        return compra;
+                    } else{
+                        return compra;
+                    }
+                });
+            } else {
+                compras.push(productoSeleccionado)
             }
-        );
-    } else {
-        contadorProductos++;
-        compras.push(infoProducto);
-        
-    }
-
-    cargarHtmlCarrito();
-    guardarLocalStorage();
+            cargarHtmlCarrito();
+            guardarLocalStorage();
+        }
+    )
+        .catch((error) => {
+            console.error("Algo salio mal leyendo datos. ", error);
+        }
+    )
 }
 
 function cargarHtmlCarrito() {
     limpiarHtmlCarrito();
-    compras.forEach(producto => {
-        const { img, title, precio, cant, id } = producto;
+    compras.forEach(compra => {
         let row = document.createElement("div");
         row.classList.add("item");
         row.innerHTML = `
-            <img src="${img}">
+            <img src="${compra.img}">
             <div class="item-content">
-                <h5>${title}</h5>
-                <h5 class="carrito-precio">$${precio}</h5>
-                <h6>Cantidad: ${cant}</h6>
+                <h5>${compra.title}</h5>
+                <h5 class="carrito-precio">$${compra.precio}</h5>
+                <h6>Cantidad: ${compra.cantidadCarrito}</h6>
             </div>
-            <span class="btn-borrar" producto-id="${id}">X</span>
+            <span class="btn-borrar" producto-id="${compra.id}">X</span>
         `;
         containerCompras.appendChild(row);
     });
@@ -186,20 +197,20 @@ function limpiarHtmlCarrito() {
 
 // Funciones de Almacenamiento
 function guardarLocalStorage() {
-    const datos = {
+    const storage = {
         compras: compras,
         precioAcumulado: precioAcumulado,
         contadorProductos: contadorProductos
     };
-    localStorage.setItem("carrito", JSON.stringify(datos));
+    localStorage.setItem("carrito", JSON.stringify(storage));
 }
 
 function cargarLocalStorage() {
-    const datos = JSON.parse(localStorage.getItem("carrito"));
-    if (datos) {
-        compras = datos.compras;
-        precioAcumulado = parseFloat(datos.precioAcumulado);
-        contadorProductos = datos.contadorProductos;
+    const storage = JSON.parse(localStorage.getItem("carrito"));
+    if (storage) {
+        compras = storage.compras;
+        precioAcumulado = parseFloat(storage.precioAcumulado);
+        contadorProductos = storage.contadorProductos;
         cargarHtmlCarrito();
     }
 }
