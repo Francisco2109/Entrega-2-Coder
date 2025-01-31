@@ -2,8 +2,14 @@ body{
     background-color: #838383;
     font-family: system-ui;
 }
+li {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+}
 header{
-    background-image: url(img/iconos/Banner.jpg);
+    background-color: #c2c2c2;
     padding-top: 18px;
     padding-bottom: 18px;
     position: top;
@@ -17,17 +23,25 @@ header{
     text-align: center;
     margin: auto;
 }
-.header-main{
+.navBar{
     display: flex;
     justify-content: space-between;
     margin: auto;
     align-items: center;
     position: relative;
 }
-.header-main div{
+.navBar ul{
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    align-items: center;
+    position: relative;
+    gap: 3rem;
+}
+.navBar div{
     position: relative;
 }
-.header-main p{
+.navBar p{
     position: absolute;
     top: -24px;
     right: -8px;
@@ -37,8 +51,15 @@ header{
     border-radius: 50%;
     color: red;
     font-weight: 700;
-    font-family: system-ui;
+    font-family: Arial;
     line-height: 18px;
+}
+.link{
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    color: black;
+    margin-left: 1rem;
 }
 .logo{
     width: 100px;
@@ -73,7 +94,7 @@ header{
     margin-bottom: 16px;
     transition-duration: .5s;
 }
-.productos{
+.productos ul{
     padding-top: 170px;
     display: flex;
     flex-direction: row;

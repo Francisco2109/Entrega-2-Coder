@@ -1,11 +1,14 @@
-let containerProductos = document.querySelector(".productos");
-let containerCompras = document.querySelector(".carrito-items");
-let precioTotal = document.querySelector(".precio-total");
-let cantProducto = document.querySelector(".cuenta-producto");
-let botonComprarCarrito = document.querySelector(".btn-comprar-carrito")
+const containerProductos = document.querySelector(".productos");
+const ul = document.createElement("ul");
+const containerCompras = document.querySelector(".carrito-items");
+const precioTotal = document.querySelector(".precio-total");
+const cantProducto = document.querySelector(".cuenta-producto");
+const botonComprarCarrito = document.querySelector(".btn-comprar-carrito")
 let compras = [];
 let precioAcumulado = 0;
 let contadorProductos = 0;
+
+containerProductos.appendChild(ul);
 
 const productosLista = [
     {id: 0, img: "img/productos/generico.png", title: "teclado gamer1", precio: 1800},
@@ -25,19 +28,18 @@ function cargarProductos() {
     let indice = 0;
     productosLista.forEach(producto => {
         if (indice < productosLista.length) {
-                let item = document.createElement("div");
+                let item = document.createElement("li");
+                item.className = "cards";
                 item.innerHTML = `
-                    <div class="cards">
                         <div>
                             <img src="${producto.img}" class="producto-img">
                         </div>
                         <h5 class="producto-title">${producto.title}</h5>
                         <p>$<span class="producto-precio">${producto.precio}</span></p>
                         <button producto-id="${producto.id}" class="btn-comprar">Agregar al Carrito</button>
-                    </div>
                 `;
 
-                containerProductos.appendChild(item);
+                ul.appendChild(item);
                 indice ++
             }
         }
@@ -177,19 +179,6 @@ function cargarLocalStorage() {
         contadorProductos = datos.contadorProductos;
         cargarHtmlCarrito();
     }
-}
-
-// Funciones display
-function abrirCarrito(){
-    if ((document.getElementById("productos-carrito-id").style.display) == "block" ){
-        document.getElementById("productos-carrito-id").style.display = "none";
-    }
-    else{
-        document.getElementById("productos-carrito-id").style.display = "block";
-    }
-}
-function bienvenido(){
-    alert("Bienvenido! Tenemos Ofertas en Fernet para el este caluroso Finde!")
 }
 
 cargarLocalStorage();
