@@ -25,23 +25,46 @@ const productosLista = [
 
 // Carga de Datos
 function cargarProductos() {
-    let indice = 0;
-    productosLista.forEach(producto => {
-        if (indice < productosLista.length) {
-                let item = document.createElement("li");
-                item.className = "cards";
-                item.innerHTML = `
-                        <div>
-                            <img src="${producto.img}" class="producto-img">
-                        </div>
-                        <h5 class="producto-title">${producto.title}</h5>
-                        <p>$<span class="producto-precio">${producto.precio}</span></p>
-                        <button producto-id="${producto.id}" class="btn-comprar">Agregar al Carrito</button>
-                `;
+    // let indice = 0;
+    // productosLista.forEach(producto => {
+    //     if (indice < productosLista.length) {
+    //             let item = document.createElement("li");
+    //             item.className = "cards";
+    //             item.innerHTML = `
+    //                     <div>
+    //                         <img src="${producto.img}" class="producto-img">
+    //                     </div>
+    //                     <h5 class="producto-title">${producto.title}</h5>
+    //                     <p>$<span class="producto-precio">${producto.precio}</span></p>
+    //                     <button producto-id="${producto.id}" class="btn-comprar">Agregar al Carrito</button>
+    //             `;
 
-                ul.appendChild(item);
-                indice ++
-            }
+    //             ul.appendChild(item);
+    //             indice ++
+    //         }
+    //     }
+    // )
+    fetch('productos.json')
+        .then((respuesta) => respuesta.json())
+        .then((datos) => {
+            const data = datos;
+            data.forEach(item => {
+                const card = document.createElement('li');
+                card.className = "cards";
+                card.innerHTML = `
+                        <div>
+                            <img src="${item.img}" class="producto-img">
+                        </div>
+                        <h5 class="producto-title">${item.title}</h5>
+                        <p>$<span class="producto-precio">${item.precio}</span></p>
+                        <button producto-id="${item.id}" class="btn-comprar">Agregar al Carrito</button>
+                `;
+                ul.appendChild(card);
+            });
+        }
+    )
+        .catch((error) => {
+            console.error("Algo salio mal. ", error);
         }
     )
 }
