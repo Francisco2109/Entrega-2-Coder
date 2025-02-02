@@ -63,10 +63,10 @@ function removerProducto(event) {
             if (compra.id == borrarId) {
                 precioAcumulado =  precioAcumulado - parseFloat(compra.precio);
                 contadorProductos--;
-                compra.cantidadCarrito--;
-                if (compra.cantProducto == 1) {
+                if (compra.cantidadCarrito == 1) {
                     compras = compras.filter(compra => compra.id != borrarId);
                 }
+                compra.cantidadCarrito--;
             }
         });
         
