@@ -185,3 +185,18 @@ header{
 .productos-carrito .item .item-content h5.cart-price{
     font-weight: 700;
 }
+.Buscador {
+    position: absolute;
+    right: 300px;
+    top: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    align-content: center;
+  }
+  
+  input {
+    font-size: 20px;
+  }
+  .hide {
+    display: none;
+  }
