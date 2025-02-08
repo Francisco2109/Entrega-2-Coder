@@ -45,7 +45,7 @@ divCarritoAbierto.innerHTML = `
         <h3>Mi carrito</h3>
         <div class="carrito-items"></div>
         <h2>Total: $<strong class="precio-total">0</strong></h2>
-        <button class="btn-comprar-carrito">Confirmar Compra</button>
+        <a href="/html/procesoDeCompra.html" class="btn-comprar-carrito">Confirmar Compra</a>
     `;
 barra.appendChild(divCarritoAbierto);
 
@@ -57,4 +57,16 @@ function abrirCarrito(){
     else{
         document.getElementById("productos-carrito-id").style.display = "block";
     }
-}
+};
+
+// Barra de Busqueda
+
+const searchBar = document.createElement("div");
+searchBar.className = "Buscado";
+// Falta invocar la funcion de busqueda
+searchBar.innerHTML = `
+        <label for="Busqueda"></label>
+        <input type="Busqueda" id="Busqueda">
+`;
+ulNav.appendChild(searchBar)
+

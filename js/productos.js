@@ -133,7 +133,7 @@ function leerDatos(productoSeleccionado) {
 }
 
 function cargarHtmlCarrito() {
-    limpiarHtmlCarrito();
+    limpiarHtml(containerCompras);
     compras.forEach(compra => {
         let item = document.createElement("div");
         item.classList.add("item");
@@ -158,17 +158,19 @@ function cargarHtmlCarrito() {
 }
 function confirmarCompra(){
     alert("Compra Completada!!")
-    compras = []
+    crearTicket(compras,contadorProductos, precioAcumulado);
+    // Lo de abajo no funciona reescribir en html/procesoDeCompra.html
+    compras = [];
     precioAcumulado = 0;
     contadorProductos = 0;
     precioTotal.innerHTML = 0;
     cantProducto.innerHTML = 0;
-    limpiarHtmlCarrito()
+    limpiarHtml(containerCompras);
     guardarLocalStorage();
 }
 
-function limpiarHtmlCarrito() {
-    containerCompras.innerHTML = "";
+function limpiarHtml(raiz) {
+    raiz.innerHTML = "";
 }
 
 // Funciones de Almacenamiento

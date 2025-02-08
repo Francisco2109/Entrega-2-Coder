@@ -6,7 +6,7 @@ div.appendChild(ul);
 
 
 
-function crearTicket(lista){
+function crearTicket(lista, cantItems, precioTotals){
     lista.forEach(dato => {
         const item = document.createElement("li");
         dato.nombre.toUpperCase();
@@ -16,5 +16,6 @@ function crearTicket(lista){
             <h6 class="precioTicket">Precio ${dato.precio}</h6>
         `;
         ul.appendChild(item);
-    }); 
+    });
 }
+
