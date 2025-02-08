@@ -5,6 +5,8 @@ const containerCompras = document.querySelector(".carrito-items");
 const precioTotal = document.querySelector(".precio-total");
 const cantProducto = document.querySelector(".cuenta-producto");
 const botonComprarCarrito = document.querySelector(".btn-comprar-carrito")
+
+const dataProductos = [];
 let compras = [];
 let precioAcumulado = 0;
 let contadorProductos = 0;
@@ -18,6 +20,7 @@ function cargarProductos() {
         .then((datos) => {
             const data = datos;
             data.forEach(item => {
+                dataProductos.push(item)
                 const card = document.createElement('li');
                 card.className = "cards";
                 card.innerHTML = `
@@ -51,7 +54,7 @@ function eventos(){
 function aggProducto(event) {
     if (event.target.classList.contains("btn-comprar")) {
         const selectProduct = event.target.parentElement; 
-        leerDatosHtml(selectProduct);
+        leerDatos(selectProduct);
     }
 }
 
@@ -93,7 +96,7 @@ function stringToProducto(string){
     return Producto
 }
 
-function leerDatosHtml(productoSeleccionado) {
+function leerDatos(productoSeleccionado) {
     buscaId = productoSeleccionado.querySelector("button").getAttribute("producto-id")
     fetch('productos.json')
         .then((respuesta) => respuesta.json())
