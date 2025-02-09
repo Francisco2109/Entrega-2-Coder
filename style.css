@@ -200,3 +200,17 @@ header{
   .hide {
     display: none;
   }
+#Button-Search{
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    appearance: none;
+    background-color: inherit;
+  }
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px;
+  }

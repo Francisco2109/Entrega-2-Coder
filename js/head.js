@@ -67,6 +67,9 @@ searchBar.className = "Buscado";
 searchBar.innerHTML = `
         <label for="Busqueda"></label>
         <input type="Busqueda" id="Busqueda">
+        <button id="Button-Search" type="submit">
+        <img src="img/iconos/busqueda1.svg" alt="buttonpng" border="0" />
+        </button>
 `;
 ulNav.appendChild(searchBar)
 
