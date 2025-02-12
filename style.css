@@ -102,15 +102,21 @@ header{
     justify-content: center;
     gap: 5rem;
 }
-.cards{
-    max-width: 250px;
-    background-color: white;
-    padding-bottom: 34px;
-    margin-bottom: 40px;
+.cards {
+    width: 200px; /* Ajusta según el tamaño deseado */
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    display: block;
 }
 .cards img{
     width: 100%;
-}
+    max-width: 150px;
+    height: auto;
+    display: block;
+    margin: 0 auto;}
 .cards p{
     font-family: system-ui;
     font-weight: 500;
@@ -206,7 +212,8 @@ header{
     border: none;
     cursor: pointer;
     appearance: none;
-    background-color: inherit;
+    background-color: black;
+    height: 29px;
   }
   div {
     display: flex;
@@ -214,3 +221,9 @@ header{
     align-items: center;
     margin: 40px;
   }
+#sortButton{
+    cursor: pointer;
+    position: absolute;
+    top: 200px;
+    right: 95px;
+}
