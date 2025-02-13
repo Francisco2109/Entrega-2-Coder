@@ -80,7 +80,7 @@ header{
     min-width: 290px;
     z-index: 9999;
 }
-.productos-carrito button{
+.productos-carrito a{
     font-family: system-ui;
     text-decoration: none;
     background: greenyellow;
@@ -154,24 +154,29 @@ header{
     transition-duration: .3s;
 }
 .productos-carrito .item img{
-    width: 115px;
+    width: 80px;
+    height: auto; 
 }
-.productos-carrito .item{
+.productos-carrito ul{
     display: flex;
+    flex-direction: column;
     align-items: center;
     border-bottom: solid 2px red;
+    gap: 10px; 
+    list-style: none;
+    padding: 0;
 }
-.productos-carrito .item .item-content{
+.productos-carrito .item{
     margin: 0 19px;
     width: 201px;
 }
-.productos-carrito .item .item-content h5{
+.productos-carrito .item h5{
     margin: 0;
     font-size: 15px;
     font-weight: 400;
     font-family: system-ui;
 }
-.productos-carrito .item .item-content h6{
+.productos-carrito .item h6{
     margin: 0;
     font-size: 13px;
     font-weight: 400;
@@ -179,16 +184,17 @@ header{
 }
 .productos-carrito .item span{
     background-color: red;
-    padding: 0px 5px;
-    border-radius: 50%;
+    padding: 0px 6px;
+    border-radius: 100%;
     color: white;
     font-family: system-ui;
     cursor: pointer;
+    gap: 5px;
 }
 .productos-carrito h3{
     margin-bottom: 0;
 }
-.productos-carrito .item .item-content h5.cart-price{
+.productos-carrito .item h5 .cart-price{
     font-weight: 700;
 }
 .Buscador {
@@ -215,7 +221,7 @@ header{
     background-color: black;
     height: 29px;
   }
-  div {
+.Buscado {
     display: flex;
     justify-content: center;
     align-items: center;

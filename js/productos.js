@@ -1,38 +1,29 @@
 const containerProductos = document.querySelector(".productos");
 const ulProductos = document.createElement("ul");
-// TODO const ulCompras = document.createElement("ul");
-const containerCompras = document.querySelector(".carrito-items");
+containerProductos.appendChild(ulProductos);
+
+const containerCompras = document.getElementById("carrito-container");
+const ulCompras = document.createElement("ul");
+containerCompras.appendChild(ulCompras);
+
 const precioTotal = document.querySelector(".precio-total");
 const cantProducto = document.querySelector(".cuenta-producto");
 const botonComprarCarrito = document.querySelector(".btn-comprar-carrito")
 
-const dataProductos = [];
+let dataProductos;
 let compras = [];
 let precioAcumulado = 0;
 let contadorProductos = 0;
 
-containerProductos.appendChild(ulProductos);
+
 
 // Carga de Datos
-function cargarProductos() {
+function cargarProductosFromJson() {
     fetch('productos.json')
         .then((respuesta) => respuesta.json())
         .then((datos) => {
-            const data = datos;
-            data.forEach(item => {
-                dataProductos.push(item)
-                const card = document.createElement('li');
-                card.className = "cards";
-                card.innerHTML = `
-                        <div>
-                            <img src="${item.img}" class="producto-img">
-                        </div>
-                        <h5 class="producto-title">${item.title}</h5>
-                        <p>$<span class="producto-precio">${item.precio}</span></p>
-                        <button producto-id="${item.id}" class="btn-comprar">Agregar al Carrito</button>
-                `;
-                ulProductos.appendChild(card);
-            });
+            dataProductos = datos;
+            cargarProductosHtml(dataProductos)
         }
     )
         .catch((error) => {
@@ -40,8 +31,23 @@ function cargarProductos() {
         }
     )
 }
-cargarProductos()
+cargarProductosFromJson()
 
+function cargarProductosHtml(arrayProductos){
+    arrayProductos.forEach(item => {
+        const card = document.createElement('li');
+        card.className = "cards";
+        card.innerHTML = `
+                <div>
+                    <img src="${item.img}" class="producto-img">
+                </div>
+                <h5 class="producto-title">${item.title}</h5>
+                <p>$<span class="producto-precio">${item.precio}</span></p>
+                <button producto-id="${item.id}" class="btn-comprar">Agregar al Carrito</button>
+        `;
+        ulProductos.appendChild(card);
+    });
+}
 
 // Eventos y Manejo Carrito 
 
@@ -73,6 +79,17 @@ function removerProducto(event) {
             }
         });
         
+    }
+    if (event.target.classList.contains("btn-agregar")){
+        const agregarId = event.target.getAttribute("producto-id");
+
+        compras.forEach(compra => {
+            if (compra.id == agregarId) {
+                precioAcumulado =  precioAcumulado + parseFloat(compra.precio);
+                contadorProductos++;
+                compra.cantidadCarrito++;
+            }
+        });
     }
 
     if (compras.length === 0) {
@@ -133,9 +150,9 @@ function leerDatos(productoSeleccionado) {
 }
 
 function cargarHtmlCarrito() {
-    limpiarHtml(containerCompras);
+    limpiarHtml(ulCompras);
     compras.forEach(compra => {
-        let item = document.createElement("div");
+        let item = document.createElement("li");
         item.classList.add("item");
         item.innerHTML = `
             <img src="${compra.img}">
@@ -144,9 +161,10 @@ function cargarHtmlCarrito() {
                 <h5 class="carrito-precio">$${compra.precio}</h5>
                 <h6>Cantidad: ${compra.cantidadCarrito}</h6>
             </div>
-            <span class="btn-borrar" producto-id="${compra.id}">X</span>
+            <span class="btn-agregar" producto-id="${compra.id}">+</span>
+            <span class="btn-borrar" producto-id="${compra.id}">-</span>
         `;
-        containerCompras.appendChild(item);
+        ulCompras.appendChild(item);
     });
     if (compras.length === 0) {
         precioTotal.innerHTML = 0;

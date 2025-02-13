@@ -43,7 +43,7 @@ divCarritoAbierto.className = "productos-carrito";
 divCarritoAbierto.id = "productos-carrito-id";
 divCarritoAbierto.innerHTML = `
         <h3>Mi carrito</h3>
-        <div class="carrito-items"></div>
+        <div class="carrito-items" id="carrito-container"></div>
         <h2>Total: $<strong class="precio-total">0</strong></h2>
         <a href="/html/procesoDeCompra.html" class="btn-comprar-carrito">Confirmar Compra</a>
     `;
@@ -74,7 +74,7 @@ searchBar.innerHTML = `
 ulNav.appendChild(searchBar)
 
 // Evento para la barra de búsqueda
-document.getElementById("Busqueda").addEventListener("input", function () {
+document.getElementById("Button-Search").addEventListener("click", function () {
     const searchText = this.value.toLowerCase();
     fetch("productos.json")
         .then(response => response.json())
@@ -83,7 +83,7 @@ document.getElementById("Busqueda").addEventListener("input", function () {
                 product.title.toLowerCase().includes(searchText)
             );
             filteredProducts.sort((a, b) => a.title.localeCompare(b.title));
-            let listContainer = document.querySelector(".productos");
+            let listContainer = document.querySelector(".productos ul");
             listContainer.innerHTML = "";
             filteredProducts.forEach(product => {
                 let listItem = document.createElement("div");
