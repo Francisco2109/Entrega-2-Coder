@@ -113,31 +113,13 @@ document.addEventListener("DOMContentLoaded", function() {
         sortButton.addEventListener("click", function() {
             console.log("Botón de ordenar clickeado");
             console.log("Orden actual: " + (sortAscending ? "Ascendente" : "Descendente"));
-            fetch("productos.json")
-                .then(response => response.json())
-                .then(data => {
-                    if (sortAscending) {
-                        data.sort((a, b) => a.precio - b.precio);
-                    } else {
-                        data.sort((a, b) => b.precio - a.precio);
-                    }
-                    sortAscending = !sortAscending;
-                    let listContainer = document.querySelector(".productos ul");
-                    listContainer.innerHTML = "";
-                    data.forEach(product => {
-                        let listItem = document.createElement("div");
-                        listItem.className = "cards";
-                        listItem.innerHTML = `
-                            <div>
-                                <img src="${product.img}" class="producto-img">
-                            </div>
-                            <h5 class="producto-title">${product.title}</h5>
-                            <p>$<span class="producto-precio">${product.precio}</span></p>
-                            <button producto-id="${product.id}" class="btn-comprar">Agregar al Carrito</button>
-                        `;
-                        listContainer.appendChild(listItem);
-                    });
-                })
+            if (sortAscending) {
+                dataProductos.sort((a, b) => a.precio - b.precio);
+            } else {
+                dataProductos.sort((a, b) => b.precio - a.precio);
+            }
+            sortAscending = !sortAscending;
+            cargarProductosHtml(dataProductos);
             })
         }
     })

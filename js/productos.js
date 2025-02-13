@@ -34,6 +34,7 @@ function cargarProductosFromJson() {
 cargarProductosFromJson()
 
 function cargarProductosHtml(arrayProductos){
+    limpiarHtml(ulProductos)
     arrayProductos.forEach(item => {
         const card = document.createElement('li');
         card.className = "cards";
@@ -173,7 +174,7 @@ function confirmarCompra(){
     contadorProductos = 0;
     precioTotal.innerHTML = 0;
     cantProducto.innerHTML = 0;
-    limpiarHtml(containerCompras);
+    limpiarHtml(ulCompras);
     guardarLocalStorage();
 }
 
