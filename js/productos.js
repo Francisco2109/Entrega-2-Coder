@@ -115,11 +115,7 @@ function stringToProducto(string){
 
 function leerDatos(productoSeleccionado) {
     buscaId = productoSeleccionado.querySelector("button").getAttribute("producto-id")
-    fetch('productos.json')
-        .then((respuesta) => respuesta.json())
-        .then((datos) => {
-            const data = datos;
-            data.forEach(producto => {
+            dataProductos.forEach(producto => {
                 if (producto.id == buscaId) {
                 productoSeleccionado = stringToProducto(producto);
                 }
@@ -142,12 +138,6 @@ function leerDatos(productoSeleccionado) {
             cargarHtmlCarrito();
             guardarLocalStorage();
         }
-    )
-        .catch((error) => {
-            console.error("Algo salio mal leyendo datos. ", error);
-        }
-    )
-}
 
 function cargarHtmlCarrito() {
     limpiarHtml(ulCompras);
