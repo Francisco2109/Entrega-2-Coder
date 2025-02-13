@@ -75,14 +75,6 @@ searchBar.innerHTML = `
 ulNav.appendChild(searchBar)
 
 // Evento para la barra de búsqueda
-document.getElementById("Button-Search").addEventListener("click", function () {
-    const buscarTexto = this.toLowerCase();
-    const filtroProductos = dataProductos.filter(producto =>
-        producto.title.toLowerCase().includes(buscarTexto)
-    );
-    filtroProductos.sort((a, b) => a.title.localeCompare(b.title));
-    cargarProductosHtml(filtroProductos)
-});
 
 // Boton de ordernar alfabeticamente
 
