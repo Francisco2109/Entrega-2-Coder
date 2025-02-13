@@ -17,6 +17,9 @@ const precioTotal = document.querySelector(".precio-total");
 const cantProducto = document.querySelector(".cuenta-producto");
 const botonComprarCarrito = document.querySelector(".btn-comprar-carrito")
 
+const sortButton = document.getElementById("sortButton");
+let menorOrden = true;
+
 let dataProductos;
 let compras = [];
 let precioAcumulado = 0;
@@ -63,7 +66,8 @@ function cargarProductosHtml(arrayProductos){
 function eventos(){
     containerProductos.addEventListener("click", aggProducto);
     containerCompras.addEventListener("click", removerProducto);
-    botonComprarCarrito.addEventListener("click", confirmarCompra)
+    botonComprarCarrito.addEventListener("click", confirmarCompra);
+    sortButton.addEventListener("click", ordenarPrecio);
 }
 
 function aggProducto(event) {
@@ -108,6 +112,16 @@ function removerProducto(event) {
 
     cargarHtmlCarrito();
     guardarLocalStorage();
+}
+
+function ordenarPrecio(){
+    if (menorOrden) {
+        dataProductos.sort((a, b) => a.precio - b.precio);
+    } else {
+        dataProductos.sort((a, b) => b.precio - a.precio);
+    }
+    menorOrden = !menorOrden;
+    cargarProductosHtml(dataProductos);
 }
 
 function stringToProducto(string){

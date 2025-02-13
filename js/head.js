@@ -88,19 +88,3 @@ document.getElementById("Button-Search").addEventListener("click", function () {
 
 // document.addEventListener("DOMContentLoaded", function() {
     
-    
-function ordenarPrecio(){
-    let sortAscending = true;
-    const sortButton = document.getElementById("sortButton");
-    if (sortButton) {
-        sortButton.addEventListener("click", function() {
-            if (sortAscending) {
-                dataProductos.sort((a, b) => a.precio - b.precio);
-            } else {
-                dataProductos.sort((a, b) => b.precio - a.precio);
-            }
-            sortAscending = !sortAscending;
-            cargarProductosHtml(dataProductos);
-            })
-        }
-    }
