@@ -73,10 +73,4 @@ searchBar.innerHTML = `
         </button>
 `;
 ulNav.appendChild(searchBar)
-
-// Evento para la barra de búsqueda
-
-// Boton de ordernar alfabeticamente
-
-// document.addEventListener("DOMContentLoaded", function() {
     
