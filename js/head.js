@@ -1,4 +1,5 @@
-const head = document.getElementById('header');
+const head = document.querySelector('header');
+head.className = "header";
 const barra = document.createElement("div");
 barra.className = "navBar container";
 barra.innerHTML = `
@@ -75,44 +76,24 @@ ulNav.appendChild(searchBar)
 
 // Evento para la barra de búsqueda
 document.getElementById("Button-Search").addEventListener("click", function () {
-    const searchText = this.value.toLowerCase();
-    fetch("productos.json")
-        .then(response => response.json())
-        .then(data => {
-            const filteredProducts = data.filter(product =>
-                product.title.toLowerCase().includes(searchText)
-            );
-            filteredProducts.sort((a, b) => a.title.localeCompare(b.title));
-            let listContainer = document.querySelector(".productos ul");
-            listContainer.innerHTML = "";
-            filteredProducts.forEach(product => {
-                let listItem = document.createElement("div");
-                listItem.className = "cards";
-                listItem.innerHTML = `
-                    <div>
-                        <img src="${product.img}" class="producto-img">
-                    </div>
-                    <h5 class="producto-title">${product.title}</h5>
-                    <p>$<span class="producto-precio">${product.precio}</span></p>
-                    <button producto-id="${product.id}" class="btn-comprar">Agregar al Carrito</button>
-                `;
-                listContainer.appendChild(listItem);
-            });
-        })
-        .catch(error => {
-            console.error("Error al obtener el archivo JSON:", error);
-        });
+    const buscarTexto = this.toLowerCase();
+    const filtroProductos = dataProductos.filter(producto =>
+        producto.title.toLowerCase().includes(buscarTexto)
+    );
+    filtroProductos.sort((a, b) => a.title.localeCompare(b.title));
+    cargarProductosHtml(filtroProductos)
 });
 
 // Boton de ordernar alfabeticamente
 
-document.addEventListener("DOMContentLoaded", function() {
+// document.addEventListener("DOMContentLoaded", function() {
+    
+    
+function ordenarPrecio(){
     let sortAscending = true;
     const sortButton = document.getElementById("sortButton");
     if (sortButton) {
         sortButton.addEventListener("click", function() {
-            console.log("Botón de ordenar clickeado");
-            console.log("Orden actual: " + (sortAscending ? "Ascendente" : "Descendente"));
             if (sortAscending) {
                 dataProductos.sort((a, b) => a.precio - b.precio);
             } else {
@@ -122,4 +103,4 @@ document.addEventListener("DOMContentLoaded", function() {
             cargarProductosHtml(dataProductos);
             })
         }
-    })
+    }

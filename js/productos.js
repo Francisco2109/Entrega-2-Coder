@@ -1,3 +1,10 @@
+const raizProducto = document.querySelector("main");
+raizProducto.className = "container";
+raizProducto.innerHTML = `
+        <div class="productos"></div>
+        <button id="sortButton">Mayor $ a Menor $</button>
+    `;
+
 const containerProductos = document.querySelector(".productos");
 const ulProductos = document.createElement("ul");
 containerProductos.appendChild(ulProductos);
@@ -14,6 +21,7 @@ let dataProductos;
 let compras = [];
 let precioAcumulado = 0;
 let contadorProductos = 0;
+
 
 
 
