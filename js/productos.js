@@ -94,11 +94,16 @@ function aggProducto(event) {
 function removerProducto(event) {
     if (event.target.classList.contains("btn-borrar")) {
         const borrarId = event.target.getAttribute("producto-id");
-
+        dataProductos.forEach(producto => {
+            if (producto.id == borrarId) {
+                producto.stock++;
+            }
+        })
         compras.forEach(compra => {
             if (compra.id == borrarId) {
                 precioAcumulado =  precioAcumulado - parseFloat(compra.precio);
                 contadorProductos--;
+                compra.stock++;
                 if (compra.cantidadCarrito == 1) {
                     compras = compras.filter(compra => compra.id != borrarId);
                 }
@@ -125,6 +130,7 @@ function removerProducto(event) {
     }
 
     cargarHtmlCarrito();
+    cargarProductosHtml(dataProductos);
     guardarLocalStorage();
 }
 
