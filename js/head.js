@@ -56,7 +56,7 @@ divCarritoAbierto.innerHTML = `
         <h3>Mi carrito</h3>
         <div class="carrito-items" id="carrito-container"></div>
         <h2>Total: $<strong class="precio-total">0</strong></h2>
-        <a href="../html/procesoDeCompra.html" class="btn-comprar-carrito">Confirmar Compra</a>
+        <a class="btn-comprar-carrito">Confirmar Compra</a>
     `;
 barra.appendChild(divCarritoAbierto);
 
