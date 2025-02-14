@@ -89,6 +89,7 @@ header{
     font-size: 172x;
     text-transform: uppercase;
     font-weight: 700;
+    cursor:pointer;
 }
 .carrito:hover{
     margin-bottom: 16px;
@@ -146,6 +147,7 @@ header{
     font-size: 17px;
     text-transform: uppercase;
     font-weight: 700;
+    cursor: pointer;
 }
 .cards a:hover{
     background: #4704ff00;

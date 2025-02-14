@@ -18,4 +18,16 @@ function crearTicket(lista, cantItems, precioTotals){
         ul.appendChild(item);
     });
 }
-
+// Agregar Toastify al botón de agregar al carrito
+// document.addEventListener("click", function(event) {
+//     if (event.target.classList.contains("btn-comprar")) {
+//         Toastify({
+//             text: "Producto agregado al carrito",
+//             duration: 3000,
+//             close: true,
+//             gravity: "top",
+//             position: "right",
+//             backgroundColor: "#4CAF50",
+//         }).showToast();
+//     }
+// });

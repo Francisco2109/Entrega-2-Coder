@@ -200,19 +200,100 @@ function cargarHtmlCarrito() {
         cantProducto.innerHTML = contadorProductos;
     }
 }
-function confirmarCompra(){
-    alert("Compra Completada!!")
-    crearTicket(compras,contadorProductos, precioAcumulado);
-    // Lo de abajo no funciona reescribir en html/procesoDeCompra.html
-    compras = [];
-    precioAcumulado = 0;
-    contadorProductos = 0;
-    precioTotal.innerHTML = 0;
-    cantProducto.innerHTML = 0;
-    limpiarHtml(ulCompras);
-    guardarLocalStorage();
+// function confirmarCompra(){
+//     alert("Compra Completada!!")
+//     crearTicket(compras,contadorProductos, precioAcumulado);
+//     // Lo de abajo no funciona reescribir en html/procesoDeCompra.html
+//     compras = [];
+//     precioAcumulado = 0;
+//     contadorProductos = 0;
+//     precioTotal.innerHTML = 0;
+//     cantProducto.innerHTML = 0;
+//     limpiarHtml(ulCompras);
+//     guardarLocalStorage();
+// }
+
+function confirmarCompra() {
+    Swal.fire({
+        title: 'Ingrese sus datos',
+        html: `
+            <input id="swal-nombre" class="swal2-input" placeholder="Nombre">
+            <input id="swal-email" class="swal2-input" placeholder="Email">
+            <input id="swal-Direccion" class="swal2-input" placeholder="Direccion">
+            <select id="swal-pago" class="swal2-select">
+                <option value="Tarjeta">Tarjeta de Crédito/Débito</option>
+                <option value="Efectivo">Efectivo</option>
+                <option value="Transferencia">Transferencia Bancaria</option>
+            </select>`,
+        showCancelButton: true,
+        confirmButtonText: 'Siguiente',
+        preConfirm: () => {
+            const nombre = document.getElementById('swal-nombre').value;
+            const email = document.getElementById('swal-email').value;
+            const Direccion = document.getElementById('swal-Direccion').value;
+            const pago = document.getElementById('swal-pago').value;
+            if (!nombre || !email || !Direccion || !pago) {
+                Swal.showValidationMessage('Todos los campos son obligatorios');
+                return false;
+            }
+            return { nombre, email, Direccion, pago };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Confirmar compra',
+                html: `
+                    <p><strong>Nombre:</strong> ${result.value.nombre}</p>
+                    <p><strong>Email:</strong> ${result.value.email}</p>
+                    <p><strong>Direccion:</strong> ${result.value.Direccion}</p>
+                    <p><strong>Método de pago:</strong> ${result.value.pago}</p>
+                    <p><strong>Total a pagar:</strong> $${precioAcumulado}</p>
+                `,
+                showCancelButton: true,
+                confirmButtonText: 'Confirmar',
+            }).then((finalResult) => {
+                if (finalResult.isConfirmed) {
+                    generarPDF(result.value);
+                    Swal.fire('¡Compra confirmada!', `Gracias por tu compra, ${result.value.nombre}!`, 'success');
+                    
+                    // Limpiar carrito
+                    compras = [];
+                    precioAcumulado = 0;
+                    contadorProductos = 0;
+                    precioTotal.innerHTML = 0;
+                    cantProducto.innerHTML = 0;
+                    limpiarHtml(containerCompras);
+                    guardarLocalStorage();
+                }
+            });
+        }
+    });
 }
 
+// Función para generar el PDF
+function generarPDF(datosCliente) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Factura de Compra", 20, 20);
+    
+    doc.setFontSize(12);
+    doc.text(`Nombre: ${datosCliente.nombre}`, 20, 40);
+    doc.text(`Email: ${datosCliente.email}`, 20, 50);
+    doc.text(`Direccion: ${datosCliente.Direccion}`, 20, 60);
+    doc.text("Productos Comprados:", 20, 100);
+    doc.text(`Método de pago: ${datosCliente.pago}`, 20, 270);
+    doc.text(`Total: $${precioAcumulado}`, 20, 280);
+
+    let y = 110;
+    compras.forEach((producto, index) => {
+        doc.text(`${index + 1}. ${producto.title} - $${producto.precio}`, 20, y);
+        y += 10;
+    });
+
+    doc.save("Factura_Compra.pdf");
+}
 function limpiarHtml(raiz) {
     raiz.innerHTML = "";
 }
@@ -239,3 +320,25 @@ function cargarLocalStorage() {
 
 cargarLocalStorage();
 eventos();
+// Agregar Toastify al botón de agregar al carrito
+document.addEventListener("click", function(event) {
+    if (event.target.classList.contains("btn-comprar") || event.target.classList.contains("btn-agregar")) {
+        Toastify({
+            text: "Producto agregado al carrito",
+            duration: 800,
+            close: true,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "#4CAF50",
+        }).showToast();
+    }
+    if (event.target.classList.contains("btn-borrar"))
+        Toastify({
+            text: "Producto removido con exito",
+            duration: 800, 
+            close: true,
+            gravity: "top",
+            position: "right",
+            backgroundColor: "rgb(243, 163, 77)",
+        }).showToast();
+    })
