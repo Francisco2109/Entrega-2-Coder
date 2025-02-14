@@ -36,15 +36,15 @@ function cargarProductosFromJson() {
         .then((respuesta) => respuesta.json())
         .then((datos) => {
             dataProductos = datos;
+            cargarLocalStorage();
             cargarProductosHtml(dataProductos)
-        }
-    )
+        })
         .catch((error) => {
             console.error("Algo salio mal. ", error);
         }
     )
 }
-cargarProductosFromJson()
+
 
 function cargarProductosHtml(arrayProductos){
     limpiarHtml(ulProductos)
@@ -89,6 +89,43 @@ function aggProducto(event) {
         const selectProduct = event.target.parentElement; 
         leerDatos(selectProduct);
     }
+}
+function leerDatos(productoSeleccionado) {
+    buscaId = productoSeleccionado.querySelector("button").getAttribute("producto-id")
+            dataProductos.forEach(producto => {
+                if (producto.id == buscaId) {
+                productoSeleccionado = stringToProducto(producto);
+                if(producto.stock > 0){
+                    producto.stock--;
+                }
+                }
+            });
+            if (productoSeleccionado.stock > 0){
+                precioAcumulado = precioAcumulado + productoSeleccionado.precio;
+                contadorProductos++;
+            }
+            existeEnCarro = compras.some(productoEnCarro => productoEnCarro.id == buscaId);
+            if (existeEnCarro) {
+                compras = compras.map(compra => {
+                    if (compra.id == buscaId) {
+                        compra.stock--;
+                        if(compra.stock > 0){
+                            compra.cantidadCarrito++;
+                            return compra;
+                        } else {
+                            return compra;
+                        }
+                    } else{
+                        return compra;
+                    }
+                });
+            } else {
+                productoSeleccionado.stock--;
+                compras.push(productoSeleccionado)
+            }
+            cargarHtmlCarrito();
+            cargarProductosHtml(dataProductos)
+            guardarLocalStorage();
 }
 
 function removerProducto(event) {
@@ -155,43 +192,6 @@ function stringToProducto(string){
     }
     return Producto
 }
-
-function leerDatos(productoSeleccionado) {
-    buscaId = productoSeleccionado.querySelector("button").getAttribute("producto-id")
-            dataProductos.forEach(producto => {
-                if (producto.id == buscaId) {
-                productoSeleccionado = stringToProducto(producto);
-                if(producto.stock > 0){
-                    producto.stock--;
-                }
-                }
-            });
-            if (productoSeleccionado.stock > 0){
-                precioAcumulado = precioAcumulado + productoSeleccionado.precio;
-                contadorProductos++;
-            }
-            existeEnCarro = compras.some(productoEnCarro => productoEnCarro.id == buscaId);
-            if (existeEnCarro) {
-                compras = compras.map(compra => {
-                    if (compra.id == buscaId) {
-                        compra.stock--;
-                        if(compra.stock > 0){
-                            compra.cantidadCarrito++;
-                            return compra;
-                        } else {
-                            return compra;
-                        }
-                    } else{
-                        return compra;
-                    }
-                });
-            } else {
-                compras.push(productoSeleccionado)
-            }
-            cargarHtmlCarrito();
-            cargarProductosHtml(dataProductos)
-            guardarLocalStorage();
-        }
 
 function cargarHtmlCarrito() {
     limpiarHtml(ulCompras);
@@ -332,12 +332,18 @@ function cargarLocalStorage() {
         compras = storage.compras;
         precioAcumulado = parseFloat(storage.precioAcumulado);
         contadorProductos = storage.contadorProductos;
+        compras.forEach(compra => {
+            dataProductos = dataProductos.map(producto => {
+            if(compra.id === producto.id){
+                return compra
+            } else{
+                return producto
+            }
+            })
+        });    
         cargarHtmlCarrito();
     }
 }
-
-cargarLocalStorage();
-eventos();
 // Agregar Toastify al botón de agregar al carrito
 document.addEventListener("click", function(event) {
     if (event.target.classList.contains("btn-comprar") || event.target.classList.contains("btn-agregar")) {
@@ -360,3 +366,8 @@ document.addEventListener("click", function(event) {
             backgroundColor: "rgb(243, 163, 77)",
         }).showToast();
     })
+
+
+// Inicializacion
+cargarProductosFromJson();
+eventos();
