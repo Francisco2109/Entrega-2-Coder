@@ -56,6 +56,7 @@ function cargarProductosHtml(arrayProductos){
                     <img src="${item.img}" class="producto-img">
                 </div>
                 <h5 class="producto-title">${item.title}</h5>
+                <p>En Stock: ${item.stock}</p>
                 <p>$<span class="producto-precio">${item.precio}</span></p>
                 <button producto-id="${item.id}" class="btn-comprar">Agregar al Carrito</button>
         `;
@@ -154,16 +155,26 @@ function leerDatos(productoSeleccionado) {
             dataProductos.forEach(producto => {
                 if (producto.id == buscaId) {
                 productoSeleccionado = stringToProducto(producto);
+                if(producto.stock > 0){
+                    producto.stock--;
+                }
                 }
             });
-            precioAcumulado = precioAcumulado + productoSeleccionado.precio;
-            contadorProductos++;
+            if (productoSeleccionado.stock > 0){
+                precioAcumulado = precioAcumulado + productoSeleccionado.precio;
+                contadorProductos++;
+            }
             existeEnCarro = compras.some(productoEnCarro => productoEnCarro.id == buscaId);
             if (existeEnCarro) {
                 compras = compras.map(compra => {
                     if (compra.id == buscaId) {
-                        compra.cantidadCarrito++;
-                        return compra;
+                        compra.stock--;
+                        if(compra.stock > 0){
+                            compra.cantidadCarrito++;
+                            return compra;
+                        } else {
+                            return compra;
+                        }
                     } else{
                         return compra;
                     }
@@ -172,6 +183,7 @@ function leerDatos(productoSeleccionado) {
                 compras.push(productoSeleccionado)
             }
             cargarHtmlCarrito();
+            cargarProductosHtml(dataProductos)
             guardarLocalStorage();
         }
 
