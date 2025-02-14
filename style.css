@@ -233,3 +233,17 @@ header{
     top: 200px;
     right: 95px;
 }
+
+.redes{
+    text-align: center;
+    position: relative;
+}
+
+.ulRedes{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+    position: relative;
+    gap: 10px;
+}
